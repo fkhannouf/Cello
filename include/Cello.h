@@ -89,6 +89,12 @@
 #define CELLO_MAC
 #endif
 
+#ifdef __MORPHOS__
+#define CELLO_UNIX
+#define CELLO_MORPHOS
+#define CELLO_NSTRACE
+#endif
+
 #ifdef _MSC_VER
 #define CELLO_MSC
 #define popen _popen

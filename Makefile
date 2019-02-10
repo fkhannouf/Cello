@@ -1,5 +1,5 @@
-CC ?= gcc
-AR ?= ar
+CC = gcc
+AR = ar
 
 VERSION = 2.1.0
 PACKAGE = libCello-$(VERSION)
@@ -89,6 +89,20 @@ else ifeq ($(findstring FreeBSD,$(PLATFORM)),FreeBSD)
 	INSTALL_INC = mkdir -p ${INCDIR} && cp -r include/Cello.h ${INCDIR}
 	UNINSTALL_LIB = rm -f ${LIBDIR}/$(STATIC)
 	UNINSTALL_INC = rm -f ${INCDIR}/Cello.h
+else ifeq ($(findstring MorphOS,$(PLATFORM)),MorphOS)
+	PREFIX ?= /gg/usr/local
+	CC=gcc
+	DYNAMIC = 
+	STATIC = libCello.a
+	LIBS = -lpthread -lm
+
+	CFLAGS += -fPIC
+
+	INSTALL_LIB = mkdir -p ${LIBDIR} && cp -f ${STATIC} ${LIBDIR}/$(STATIC)
+	INSTALL_INC = mkdir -p ${INCDIR} && cp -r include/Cello.h ${INCDIR}
+	UNINSTALL_LIB = rm -f ${LIBDIR}/$(STATIC)
+	UNINSTALL_INC = rm -f ${INCDIR}/Cello.h
+	
 else
 	PREFIX ?= /usr/local
 
